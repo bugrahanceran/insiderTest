@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-controller-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-controller
+  template:
+    metadata:
+      labels:
+        app: test-controller
+    spec:
+      containers:
+        - name: test-controller
+          image: bugracer/test-controller:latest
+          imagePullPolicy: Always
+          env:
+            - name: SELENIUM_HUB_HOST
+              value: "chrome-node-service"
+            - name: SELENIUM_HUB_PORT
+              value: "4444"
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
